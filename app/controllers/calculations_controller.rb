@@ -128,7 +128,29 @@ class CalculationsController < ApplicationController
 
     @standard_deviation = @variance**0.5
 
-    @mode = "Replace this string with your answer."
+    placeholder_count = 0
+    placeholder_num = 0
+    count = 0
+
+    @sorted_numbers.each_with_index do |num,index|
+      if index == @sorted_numbers.length - 2
+        break
+      end
+
+      current_num = num
+
+      if @sorted_numbers[index+1] == num
+        count += 1
+      else
+        if count > placeholder_count
+          placeholder_num = current_num
+          placeholder_count = count
+        end
+        count = 0
+      end
+    end
+
+    @mode = placeholder_count
 
     # ================================================================================
     # Your code goes above.
